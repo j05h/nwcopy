@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require File.join(File.dirname(__FILE__), '..', 'lib/nwcopy')
+
+data = Nwcopy.paste
+puts "Clipboard now contains \n#{data}\n"
