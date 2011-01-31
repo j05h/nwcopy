@@ -1,0 +1,32 @@
+= nwcopy/nwpaste
+
+The fool proof network copy & paste program. Well, maybe someday.
+
+= Usage
+
+    > nwcopy
+    Copied clipboard to /Users/josh/Dropbox/nwcopy/f314eee55161b14f140ee07b358ba63ef54112ac
+    > nwpaste
+    Clipboard now contains
+    https://github.com/j05h/nwcopy
+
+
+= Description
+
+nwcopy takes whatever is in the clipboard and copies it to a file in your Dropbox folder ~/Dropbox/nwcopy/<sha1>
+
+nwpaste takes the contents of the most recent file and puts it in the clipboard.
+
+= WTF?
+
+How in the world is this useful?
+
+I constantly want to copy and paste between machines which cannot directly talk to one another. However, they do both have Dropbox installed. My solution was simple, and this is it.
+
+= Is that all?
+
+Is that all? Well, yeah, right now. This is the initial version, and it works! However, here are my plans:
+
+* Integrate with github/pastebin so that you don't need a Dropbox account.
+* Add a server component which can be easily used with curl.
+* Have some delicious brisket.
