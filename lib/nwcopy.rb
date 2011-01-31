@@ -1,7 +1,6 @@
 require 'digest/sha1'
 
 module Nwcopy
-
   def self.dropbox_dir
     File.expand_path '~/Dropbox'
   end
@@ -41,3 +40,5 @@ module Nwcopy
     clipboard
   end
 end
+
+Nwcopy.init
