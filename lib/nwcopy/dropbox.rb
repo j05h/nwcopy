@@ -2,6 +2,10 @@ require 'digest/sha1'
 
 module Nwcopy
   class Dropbox
+    class << self
+      attr_accessor :dropbox_base
+    end
+
     def self.unavailable_message
       "Dropbox was not found at #{nwcopy_dir}. Get it at http://getdropbox.com/"
     end
@@ -28,7 +32,7 @@ module Nwcopy
 
     # Used to determine which plugin has the newest file.
     def self.time
-      latest_file.mtime
+      latest_file ? latest_file.mtime : nil
     end
 
     def self.paste
@@ -50,7 +54,7 @@ module Nwcopy
     end
 
     def self.dropbox_dir
-      File.expand_path '~/Dropbox'
+      File.expand_path(dropbox_base || '~/Dropbox')
     end
 
     def self.nwcopy_dir
