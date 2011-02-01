@@ -1,5 +1,4 @@
-require 'nwcopy'
-require 'minitest/spec'
+require 'test_helper'
 require 'fileutils'
 
 describe Nwcopy::Dropbox do
