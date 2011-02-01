@@ -17,7 +17,7 @@ module Nwcopy
   def self.paste
     if Nwcopy::Dropbox.available?
       if clipboard = Nwcopy::Dropbox.paste
-        `echo "#{clipboard}" | pbcopy` # this is not ideal by any stretch
+        `echo "#{clipboard}" | pbcopy` unless `which pbcopy`.empty?
         clipboard
       end
     else
@@ -33,7 +33,11 @@ module Nwcopy
       ARGF.read
     end
   rescue IO::WaitReadable => e
-    `pbpaste`
+    unless `which pbpaste`.empty?
+      `pbpaste`
+    else
+      STDERR << 'Nothing to do!'
+    end
   end
 
 end
