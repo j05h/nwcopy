@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-require File.join(File.dirname(__FILE__), '..', 'lib/nwcopy')
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib/nwcopy'))
 
-file = Nwcopy.copy
-puts "Copied clipboard to #{file}"
+if file = Nwcopy.copy
+  puts file
+else
+  puts "No data copied"
+end

@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-require File.join(File.dirname(__FILE__), '..', 'lib/nwcopy')
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib/nwcopy'))
 
-data = Nwcopy.paste
-puts "Clipboard now contains \n#{data}\n"
+if data = Nwcopy.paste
+  puts data
+else
+  puts "No data pasted"
+end
