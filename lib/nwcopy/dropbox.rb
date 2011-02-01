@@ -32,7 +32,7 @@ module Nwcopy
     end
 
     def self.paste
-      File.new(latest_file).read
+      latest_file.read
     end
 
     private # These methods are not part of the API
