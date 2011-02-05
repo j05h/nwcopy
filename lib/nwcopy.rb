@@ -13,7 +13,7 @@ module Nwcopy
   end
 
   def self.copy
-    data = data_from_options
+    data = copy_data_from_options
 
     unavailable = []
     plugins.each do |plugin|
@@ -26,11 +26,11 @@ module Nwcopy
   end
 
   def self.paste
-    data_from_options
+    data = paste_data_from_options
     unavailable = []
     plugins.each do |plugin|
       if plugin.available?
-        if clipboard = plugin.paste
+        if clipboard = plugin.paste(data)
           `echo "#{clipboard}" | pbcopy` unless `which pbcopy`.empty?
           return clipboard
         end
@@ -41,7 +41,15 @@ module Nwcopy
   end
 
   private
-  def self.data_from_options
+  def self.paste_data_from_options
+    if ARGV.include? '--help'
+      help
+    else
+      ARGV.shift
+    end
+  end
+
+  def self.copy_data_from_options
     if ARGV.empty?
       nodata = ARGF.read_nonblock(1) rescue true
     else
@@ -49,27 +57,34 @@ module Nwcopy
     end
 
     if nodata || ARGV.include?('--help')
-      puts 'nwcopy: network copy and paste.'
-      puts 'Sign up at http://nwcopy.net.' unless Nwcopy::Client.available?
-      puts "nwcopy.net account: #{Nwcopy::Client.credentials.first}" if Nwcopy::Client.available? rescue ''
-      puts
-      puts '  nwcopy <file>'
-      puts '    Copies the file to nwcopy.net'
-      puts '  nwcopy -p'
-      puts '    Copies the contents of the clipboard (MacOS) to nwcopy.net'
-      puts '  command | nwcopy'
-      puts '    Copies the results of the piped command to nwcopy.net'
-      puts
-      puts '  nwpaste'
-      puts '    Pastes the last thing you copied to nwcopy.net'
-      puts '    If it is a file, it will be put into that file name.'
-      puts '    Any piped input or clipboard will be printed to STDOUT.'
-      puts
-      exit
+      help
     elsif ARGV.include?('-p')
       StringIO.new `pbpaste`
     else
       ARGF
     end
+  end
+
+  def self.help
+    puts 'nwcopy: network copy and paste.'
+    puts 'Sign up at http://nwcopy.net.' unless Nwcopy::Client.available?
+    puts "nwcopy.net account: #{Nwcopy::Client.credentials.first}" if Nwcopy::Client.available? rescue ''
+    puts
+    puts '  nwcopy <file>'
+    puts '    Copies the file to nwcopy.net'
+    puts '  nwcopy -p'
+    puts '    Copies the contents of the clipboard (MacOS) to nwcopy.net'
+    puts '  command | nwcopy'
+    puts '    Copies the results of the piped command to nwcopy.net'
+    puts
+    puts '  nwpaste'
+    puts '    Pastes the last thing you copied to nwcopy.net'
+    puts '    If it is a file, it will be put into that file name.'
+    puts '    Any piped input or clipboard will be printed to STDOUT.'
+    puts
+    puts '  nwpaste <hash>'
+    puts '    Pastes the provided hash from nwcopy.net'
+    puts
+    exit
   end
 end

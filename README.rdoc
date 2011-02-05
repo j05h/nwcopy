@@ -4,26 +4,33 @@ The fool proof network copy & paste program. Well, maybe someday.
 
 = Usage
 
-  Copy data from the clipboard (pbpaste).
+Copy data from the clipboard (pbpaste).
     > nwcopy -p
     /Users/josh/Dropbox/nwcopy/f314eee55161b14f140ee07b358ba63ef54112ac
-  Pastes to disk
+
+Paste to STDOUT and the clipboard (pbcopy)
     > nwpaste
     <Contents of clipboard>
 
-  Copy contents of a file to the clipboard (works with binaries)
+Copy contents of a file to the clipboard (works with binaries)
     > nwcopy /path/to/file
     /Users/josh/Dropbox/nwcopy/e1c1675f009e65d8571bbab9243660da20a3b2a2
-  Paste the file to disk
+
+Paste the file to disk
     > nwpaste
     Pasted to file
 
-  Pipe arbitrary whatever to the clipboard
+Pipe arbitrary whatever to the clipboard
     > echo 'pipes work' | nwcopy
     /Users/josh/Dropbox/nwcopy/5293e79627710caf507fb9b841df51356650c78d
-  Paste it back
+
+Paste to STDOUT and the clipboard (pbcopy)
     > nwpaste
     pipes work
+
+Paste a hash from nwcopy.net (shared or otherwise)
+    > nwpaste <hash>
+    Whatever that hash represented
 
 = Description
 

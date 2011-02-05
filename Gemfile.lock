@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    nwcopy (0.0.7)
+    nwcopy (0.0.8)
       gist
       json
       multipart-post
@@ -10,14 +10,11 @@ GEM
   remote: http://rubygems.org/
   specs:
     gist (2.0.0)
-    json (1.4.6)
+    json (1.5.1)
     multipart-post (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  gist
-  json
-  multipart-post
   nwcopy!

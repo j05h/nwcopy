@@ -35,7 +35,7 @@ module Nwcopy
       latest_file ? latest_file.mtime : nil
     end
 
-    def self.paste
+    def self.paste ignored = nil
       latest_file.read
     end
 

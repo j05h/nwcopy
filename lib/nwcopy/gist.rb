@@ -28,7 +28,7 @@ module Nwcopy
       gist.write [{:filename => filename, :input => clipboard}], false
     end
 
-    def self.paste
+    def self.paste ignored = nil
       gist.read latest_gist["repo"]
     end
 

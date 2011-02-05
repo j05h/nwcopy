@@ -44,8 +44,13 @@ module Nwcopy
     end
 
 
-    def self.paste
-      url = URI.parse("#{base_url}/paste")
+    def self.paste url_or_hash = nil
+      url = if url_or_hash
+        hash = url_or_hash.split('/').last
+        URI.parse("#{base_url}/pastes/#{hash}")
+      else
+        URI.parse("#{base_url}/paste")
+      end
 
       req = Net::HTTP::Get.new(url.path)
       res = start req, url
