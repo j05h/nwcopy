@@ -71,7 +71,7 @@ module Nwcopy
     end
 
     def self.base_url
-      ENV['NWCOPY_TEST'] == 'true' ? 'http://localhost:3000' : 'http://nwcopy.heroku.com'
+      ENV['NWCOPY_TEST'] == 'true' ? 'http://localhost:3000' : 'http://nwcopy.net'
     end
 
     def self.credentials
