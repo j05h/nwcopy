@@ -19,10 +19,9 @@ module Nwcopy
       if plugin.available?
         return plugin.copy data
       else
-        unavailable << plugin.unavailable_message
+        STDERR << plugin.unavailable_message
       end
     end
-    STDERR << unavailable.join("\n")
   end
 
   def self.paste
@@ -34,10 +33,9 @@ module Nwcopy
           return clipboard
         end
       else
-        unavailable << plugin.unavailable_message
+        STDERR << plugin.unavailable_message
       end
     end
-    STDERR << unavailable.join("\n")
   end
 
   private
