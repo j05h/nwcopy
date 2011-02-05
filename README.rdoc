@@ -4,40 +4,44 @@ The fool proof network copy & paste program. Well, maybe someday.
 
 = Usage
 
-    > nwcopy
+  Copy data from the clipboard (pbpaste).
+    > nwcopy -p
     /Users/josh/Dropbox/nwcopy/f314eee55161b14f140ee07b358ba63ef54112ac
+  Pastes to disk
     > nwpaste
-    https://github.com/j05h/nwcopy
+    <Contents of clipboard>
 
+  Copy contents of a file to the clipboard (works with binaries)
     > nwcopy /path/to/file
     /Users/josh/Dropbox/nwcopy/e1c1675f009e65d8571bbab9243660da20a3b2a2
+  Paste the file to disk
     > nwpaste
-    Contents of file
+    Pasted to file
 
+  Pipe arbitrary whatever to the clipboard
     > echo 'pipes work' | nwcopy
     /Users/josh/Dropbox/nwcopy/5293e79627710caf507fb9b841df51356650c78d
+  Paste it back
     > nwpaste
     pipes work
 
 = Description
 
-nwcopy takes whatever is in the clipboard (or pipe or filename) and copies it to a file in your Dropbox folder ~/Dropbox/nwcopy/<sha1>
+nwcopy takes whatever is in the clipboard (or pipe or filename) and copies it to http://nwcopy.net. If you don't have nwcopy.net configured, it will copy to a file in your Dropbox folder ~/Dropbox/nwcopy/<sha1>
 
-nwpaste takes the contents of the most recent file, prints it to STDIN and puts it in the clipboard.
+nwpaste takes the contents of the most recent file (from nwcopy.net or your Dropbox), prints it to STDIN and puts it in the clipboard.
 
 = WTF?
 
 How in the world is this useful?
 
-I constantly want to copy and paste between machines which cannot directly talk to one another. However, they do both have Dropbox installed. My solution was simple, and this is it.
+I constantly want to copy and paste between machines which cannot directly talk to one another. My solution was simple, and this is it. It also happens to be really easy to use.
 
 = Is that all?
 
 Is that all? Well, yeah, right now. This is the initial version, and it works! However, here are my plans:
 
-* Write some tests
 * Support multiple files with globbing and whatnot.
-* When files are supplied, they should be pasted back with their original filename (tarball?)
-* Integrate with github/pastebin/skitch/etc so that you don't need a Dropbox account.
-* Add a server component which can be easily used with curl.
+* When multiple files are supplied, they should be pasted back with their original filename (tarball?)
+* Whatever folks deem useful.
 * Have some delicious brisket.

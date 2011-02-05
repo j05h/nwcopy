@@ -13,18 +13,20 @@ module Nwcopy
   end
 
   def self.copy
-    data = read_data
+    data = data_from_options
+
     unavailable = []
     plugins.each do |plugin|
       if plugin.available?
         return plugin.copy data
       else
-        STDERR << plugin.unavailable_message
+        STDERR << plugin.unavailable_message + "\n"
       end
     end
   end
 
   def self.paste
+    data_from_options
     unavailable = []
     plugins.each do |plugin|
       if plugin.available?
@@ -33,24 +35,41 @@ module Nwcopy
           return clipboard
         end
       else
-        STDERR << plugin.unavailable_message
+        STDERR << plugin.unavailable_message + "\n"
       end
     end
   end
 
   private
-  def self.read_data
-    if ARGF.file == STDIN
-      StringIO.new(STDIN.read_nonblock(1) + STDIN.read)
+  def self.data_from_options
+    if ARGV.empty?
+      nodata = ARGF.read_nonblock(1) rescue true
+    else
+      nodata = false
+    end
+
+    if nodata || ARGV.include?('--help')
+      puts 'nwcopy: network copy and paste.'
+      puts 'Sign up at http://nwcopy.net.' unless Nwcopy::Client.available?
+      puts "nwcopy.net account: #{Nwcopy::Client.credentials.first}" if Nwcopy::Client.available? rescue ''
+      puts
+      puts '  nwcopy <file>'
+      puts '    Copies the file to nwcopy.net'
+      puts '  nwcopy -p'
+      puts '    Copies the contents of the clipboard (MacOS) to nwcopy.net'
+      puts '  command | nwcopy'
+      puts '    Copies the results of the piped command to nwcopy.net'
+      puts
+      puts '  nwpaste'
+      puts '    Pastes the last thing you copied to nwcopy.net'
+      puts '    If it is a file, it will be put into that file name.'
+      puts '    Any piped input or clipboard will be printed to STDOUT.'
+      puts
+      exit
+    elsif ARGV.include?('-p')
+      StringIO.new `pbpaste`
     else
       ARGF
     end
-  rescue IO::WaitReadable => e
-    unless `which pbpaste`.empty?
-      StringIO.new(`pbpaste`)
-    else
-      STDERR << 'Nothing to do!'
-    end
   end
-
 end
