@@ -42,7 +42,7 @@ describe Nwcopy::Gist do
       end
 
       it "should return a url response" do
-        @gist.copy("To all good things an end must come.").must_equal "someurl"
+        @gist.copy(StringIO.new("To all good things an end must come.")).must_equal "someurl"
       end
     end
 

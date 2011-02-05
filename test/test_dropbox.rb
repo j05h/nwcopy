@@ -46,7 +46,7 @@ describe Nwcopy::Dropbox do
     describe :copy do
       before do
         @data = "Bad artists copy. Good artists steal."
-        @file = @dropbox.copy @data
+        @file = @dropbox.copy StringIO.new(@data)
       end
 
       it "should exist" do
@@ -61,7 +61,7 @@ describe Nwcopy::Dropbox do
     describe :paste do
       before do
         @data = "Copy from one, it's plagiarism; copy from two, it's research."
-        @file = @dropbox.copy @data
+        @file = @dropbox.copy StringIO.new(@data)
         @pasted = @dropbox.paste
       end
 

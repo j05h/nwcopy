@@ -2,13 +2,14 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) ||
   $:.include?(File.expand_path(File.dirname(__FILE__)))
 
+require 'nwcopy/client'
 require 'nwcopy/dropbox'
 require 'nwcopy/gist'
 
 module Nwcopy
 
   def self.plugins
-    [Nwcopy::Gist, Nwcopy::Dropbox]
+    [Nwcopy::Client, Nwcopy::Gist, Nwcopy::Dropbox]
   end
 
   def self.copy
@@ -42,13 +43,13 @@ module Nwcopy
   private
   def self.read_data
     if ARGF.file == STDIN
-      STDIN.read_nonblock(1) + STDIN.read
+      StringIO.new(STDIN.read_nonblock(1) + STDIN.read)
     else
-      ARGF.read
+      ARGF
     end
   rescue IO::WaitReadable => e
     unless `which pbpaste`.empty?
-      `pbpaste`
+      StringIO.new(`pbpaste`)
     else
       STDERR << 'Nothing to do!'
     end

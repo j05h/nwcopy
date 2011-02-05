@@ -21,9 +21,11 @@ module Nwcopy
       Time.parse(latest_gist["created_at"])
     end
 
-    def self.copy clipboard
+    def self.copy io
+      clipboard = io.read
       digest = Digest::SHA1.hexdigest clipboard
-      gist.write [{:filename => digest, :input => clipboard}], false
+      filename = io.respond_to?(:filename) ? io.filename : digest
+      gist.write [{:filename => filename, :input => clipboard}], false
     end
 
     def self.paste

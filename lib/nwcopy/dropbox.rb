@@ -14,14 +14,14 @@ module Nwcopy
       return false unless File.exists? dropbox_dir
 
       unless File.exists? nwcopy_dir
-        STDERR << "Creating nwcopy directory at #{nwcopy_dir}"
         Dir.mkdir nwcopy_dir
       end
 
       File.exists? nwcopy_dir
     end
 
-    def self.copy clipboard
+    def self.copy io
+      clipboard = io.read
       digest = Digest::SHA1.hexdigest clipboard
       nwcopy_file = File.join nwcopy_dir, digest
       File.open(nwcopy_file, 'w+') do |f|

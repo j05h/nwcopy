@@ -12,8 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{network copy & paste.}
   s.description = %q{Uses your Dropbox folder to facilitate copy and pasting between machines. More awesomesauce to come.}
 
-  s.rubyforge_project = "nwcopy"
-
+  s.add_dependency 'sinatra'
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
