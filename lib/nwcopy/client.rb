@@ -1,4 +1,5 @@
 require 'net/http/post/multipart'
+require 'tempfile'
 require 'json'
 
 module Nwcopy
@@ -20,20 +21,26 @@ module Nwcopy
     end
 
     def self.copy data
-      # This looks weird. Deal is, STDIN returns - as a filename, so returning - here removes extra testing.
-      filename = data.respond_to?(:filename) ? data.filename : '-'
-
-      io = if filename.match(/-/)
-        CompositeReadIO.new data
+      if data.respond_to? :filename
+        filename = data.filename
       else
-        UploadIO.new(ARGF, data, data.filename)
+        filename = nil
+        @tmpfile = Tempfile.new 'nwcopy'
+        @tmpfile.write(data.read)
+        @tmpfile.close
+        data = File.open @tmpfile.path
       end
+
+      io = UploadIO.new(data, nil, filename)
 
       url = URI.parse("#{base_url}/copy")
       req = Net::HTTP::Post::Multipart.new url.path, 'data' => io
       res = start req, url
 
       res.body
+    ensure
+      @tmpfile.unlink if @tmpfile
+      @tmpfile = nil
     end
 
 
@@ -43,7 +50,7 @@ module Nwcopy
       req = Net::HTTP::Get.new(url.path)
       res = start req, url
 
-      file = res['Location'].split('/').last
+      file = res['Location'] ? res['Location'].split('/').last : nil
 
       if file && !File.exists?(file)
         File.open file, 'w+' do |f|
