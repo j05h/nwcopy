@@ -9,7 +9,7 @@ require 'nwcopy/gist'
 module Nwcopy
 
   def self.plugins
-    [Nwcopy::Client, Nwcopy::Gist, Nwcopy::Dropbox]
+    [Nwcopy::Client, Nwcopy::Dropbox, Nwcopy::Gist]
   end
 
   def self.copy
